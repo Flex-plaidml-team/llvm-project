@@ -246,4 +246,72 @@ def SPV_SubgroupBlockWriteINTELOp : SPV_Op<"SubgroupBlockWriteINTEL", []> {
 
 // -----
 
+def SPV_GroupNonUniformBroadcastOp : SPV_Op<"GroupNonUniformBroadcast",
+  [NoSideEffect, AllTypesMatch<["value", "result"]>]> {
+  let summary = [{
+    Return the Value of the invocation identified by the id Id to
+    all active invocations in the group.
+  }];
+
+  let description = [{
+    Result Type  must be a scalar or vector of floating-point type, integer
+    type, or Boolean type.
+
+    Execution must be Workgroup or Subgroup Scope.
+
+    The type of Value must be the same as Result Type.
+
+    Id must be a scalar of integer type. whose Signedness operand is 0.
+
+    Before version 1.5, Id must come from a constant instruction. Starting
+    with version 1.5, Id must be dynamic uniform.
+
+    The resulting value is undefined if Id is an inactive invocation, or is greater
+    than or equal to the size of the group.
+
+    <!-- End of AutoGen section -->
+
+    ```
+    scope ::= `"Workgroup"` | `"Subgroup"`
+    integer-float-scalar-vector-type ::= integer-type | float-type |
+                               `vector<` integer-literal `x` integer-type `>` |
+                               `vector<` integer-literal `x` float-type `>`
+    id-type ::= integer-type
+    group-nonuniform-broadcast-op ::= ssa-id `=` `spv.GroupNonUniformBroadcast` scope ssa_use,
+                   ssa_use `:` integer-float-scalar-vector-type `,` id-type
+    ```mlir
+
+    #### Example:
+
+    ```
+    %scalar_value = ... : f32
+    %scalar_id = ... : i32
+    %0 = spv.GroupNonUniformBroadcast "Subgroup" %scalar_value, %scalar_id : f32, i32
+    ```
+  }];
+
+  let availability = [
+    MinVersion<SPV_V_1_3>,
+    MaxVersion<SPV_V_1_5>,
+    Extension<[]>,
+    Capability<[SPV_C_GroupNonUniformBallot]>
+  ];
+
+  let arguments = (ins
+    SPV_ScopeAttr:$execution_scope,
+    SPV_Type:$value,
+    SPV_Integer:$id
+  );
+
+  let results = (outs
+    SPV_ScalarOrVectorOf<SPV_Scalar>:$result
+  );
+
+  let assemblyFormat = [{
+    $execution_scope operands attr-dict `:` type($value) `,` type($id)
+  }];
+}
+
+// -----
+
 #endif // SPIRV_GROUP_OPS

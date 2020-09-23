@@ -3253,6 +3253,7 @@ def SPV_OC_OpGroupBroadcast            : I32EnumAttrCase<"OpGroupBroadcast", 263
 def SPV_OC_OpNoLine                    : I32EnumAttrCase<"OpNoLine", 317>;
 def SPV_OC_OpModuleProcessed           : I32EnumAttrCase<"OpModuleProcessed", 330>;
 def SPV_OC_OpGroupNonUniformElect      : I32EnumAttrCase<"OpGroupNonUniformElect", 333>;
+def SPV_OC_OpGroupNonUniformBroadcast  : I32EnumAttrCase<"OpGroupNonUniformBroadcast", 337>;
 def SPV_OC_OpGroupNonUniformBallot     : I32EnumAttrCase<"OpGroupNonUniformBallot", 339>;
 def SPV_OC_OpGroupNonUniformIAdd       : I32EnumAttrCase<"OpGroupNonUniformIAdd", 349>;
 def SPV_OC_OpGroupNonUniformFAdd       : I32EnumAttrCase<"OpGroupNonUniformFAdd", 350>;
@@ -3320,7 +3321,7 @@ def SPV_OpcodeAttr :
       SPV_OC_OpBranch, SPV_OC_OpBranchConditional, SPV_OC_OpReturn,
       SPV_OC_OpReturnValue, SPV_OC_OpUnreachable, SPV_OC_OpGroupBroadcast,
       SPV_OC_OpNoLine, SPV_OC_OpModuleProcessed, SPV_OC_OpGroupNonUniformElect,
-      SPV_OC_OpGroupNonUniformBallot, SPV_OC_OpGroupNonUniformIAdd,
+      SPV_OC_OpGroupNonUniformBroadcast, SPV_OC_OpGroupNonUniformBallot, SPV_OC_OpGroupNonUniformIAdd,
       SPV_OC_OpGroupNonUniformFAdd, SPV_OC_OpGroupNonUniformIMul,
       SPV_OC_OpGroupNonUniformFMul, SPV_OC_OpGroupNonUniformSMin,
       SPV_OC_OpGroupNonUniformUMin, SPV_OC_OpGroupNonUniformFMin,

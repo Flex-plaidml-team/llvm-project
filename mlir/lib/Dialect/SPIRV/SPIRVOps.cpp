@@ -2042,6 +2042,22 @@ static LogicalResult verify(spirv::GroupNonUniformBallotOp ballotOp) {
 
   return success();
 }
+//===----------------------------------------------------------------------===//
+// spv.GroupNonUniformBroadcast
+//===----------------------------------------------------------------------===//
+
+static LogicalResult verify(spirv::GroupNonUniformBroadcastOp broadcastOp) {
+  spirv::Scope scope = broadcastOp.execution_scope();
+  if (scope != spirv::Scope::Workgroup && scope != spirv::Scope::Subgroup)
+    return broadcastOp.emitOpError(
+        "execution scope must be 'Workgroup' or 'Subgroup'");
+
+  if (!broadcastOp.id().getType().dyn_cast<IntegerType>())
+    return broadcastOp.emitOpError("id is a scalar of integer type, actual type is ")
+             << broadcastOp.id().getType();
+
+  return success();
+}
 
 //===----------------------------------------------------------------------===//
 // spv.SubgroupBlockReadINTEL
